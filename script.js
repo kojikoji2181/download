@@ -63,31 +63,26 @@ function renderTrackList() {
     tracks.forEach((track, index) => {
         const div = document.createElement('div');
         div.className = 'track-card';
+        // HTML structure changed for simple list view without big image
         div.innerHTML = `
-            <div class="card-image" style="background-image: url('${track.cover}');">
-                ${!track.cover.includes('.') ? '<i class="fa-solid fa-music"></i>' : ''}
-                <div class="overlay">
-                    <div class="play-icon-overlay">
-                        <i class="fa-solid fa-play"></i>
-                    </div>
+            <div class="track-left">
+                <div class="mini-play-icon">
+                    <i class="fa-solid fa-circle-play"></i>
+                </div>
+                <div class="track-meta">
+                    <h3>${track.title}</h3>
+                    <p>${track.artist}</p>
                 </div>
             </div>
-            <div class="card-info">
-                <h3>${track.title}</h3>
-                <p>${track.artist}</p>
-            </div>
-            <div class="card-actions">
-                <span style="font-size: 0.8rem; color: #666;">${track.duration}</span>
+            <div class="track-right">
                 <a href="${track.source}" download class="download-link-mini" title="Download">
-                    <i class="fa-solid fa-download"></i>
+                    <i class="fa-solid fa-cloud-arrow-down"></i>
                 </a>
             </div>
         `;
 
         div.addEventListener('click', (e) => {
-            // If clicked on download, don't play
             if (e.target.closest('.download-link-mini')) return;
-
             playTrack(index);
         });
 
