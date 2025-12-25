@@ -71,7 +71,6 @@ function renderTrackList() {
                 </div>
                 <div class="track-meta">
                     <h3>${track.title}</h3>
-                    <p>${track.artist}</p>
                 </div>
             </div>
             <div class="track-right">
@@ -83,7 +82,12 @@ function renderTrackList() {
 
         div.addEventListener('click', (e) => {
             if (e.target.closest('.download-link-mini')) return;
-            playTrack(index);
+            
+            if (currentTrackIndex === index && isPlaying) {
+                pauseTrack();
+            } else {
+                playTrack(index);
+            }
         });
 
         trackList.appendChild(div);
@@ -99,7 +103,6 @@ function loadTrack(index) {
 
     // Update UI
     currentTitle.textContent = track.title;
-    currentArtist.textContent = track.artist;
 
     if (track.cover && track.cover.includes('.')) {
         currentCover.style.backgroundImage = `url('${track.cover}')`;
